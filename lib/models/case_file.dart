@@ -1,4 +1,4 @@
-// lib/models/case_file.dart (UYARI DÜZELTİLDİ)
+// lib/models/case_file.dart (DÜZELTİLMİŞ HALİ)
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -14,7 +14,7 @@ class CaseFile with _$CaseFile {
     required Victim victim,
     required List<Character> characters,
     required List<Evidence> evidence,
-    required Solution solution, // YENİ: Vakanın çözümünü içerir
+    required Solution solution,
   }) = _CaseFile;
 
   factory CaseFile.fromJson(Map<String, dynamic> json) => _$CaseFileFromJson(json['case']);
@@ -39,26 +39,28 @@ class Character with _$Character {
     required String name,
     required int age,
     required String occupation,
-    // YENİ: Bu karakterin diyalog başlangıç noktasını belirtir.
     String? initialDialogueNode,
-    // YENİ: Bu karakterle ilgili tüm diyalogları içerir.
     @Default([]) List<DialogueNode> dialogues,
   }) = _Character;
 
   factory Character.fromJson(Map<String, dynamic> json) => _$CharacterFromJson(json);
 }
 
+// SORUN: @JsonSerializable ve @freezed birlikte kullanılmamalı
+// ÇÖZÜM: Sadece @freezed kullan, @JsonKey'i doğru yerde kullan
 @freezed
-@JsonSerializable(fieldRename: FieldRename.snake)
 class CaseInfo with _$CaseInfo {
   const factory CaseInfo({
     required String id,
     required String title,
-    @JsonKey(name: 'json_path')
     required String jsonPath,
   }) = _CaseInfo;
 
-  factory CaseInfo.fromJson(Map<String, dynamic> json) => _$CaseInfoFromJson(json);
+  factory CaseInfo.fromJson(Map<String, dynamic> json) => CaseInfo(
+    id: json['id'] as String,
+    title: json['title'] as String,
+    jsonPath: json['json_path'] as String,
+  );
 }
 
 @freezed
@@ -74,37 +76,34 @@ class Evidence with _$Evidence {
   factory Evidence.fromJson(Map<String, dynamic> json) => _$EvidenceFromJson(json);
 }
 
-// YENİ: Bir diyalog anını temsil eden model
 @freezed
 class DialogueNode with _$DialogueNode {
   const factory DialogueNode({
-    required String id, // Bu diyalog parçasının ID'si
-    required String text, // Karakterin söylediği metin
-    @Default([]) List<DialogueOption> options, // Oyuncunun seçebileceği cevaplar/sorular
+    required String id,
+    required String text,
+    @Default([]) List<DialogueOption> options,
   }) = _DialogueNode;
 
   factory DialogueNode.fromJson(Map<String, dynamic> json) => _$DialogueNodeFromJson(json);
 }
 
-// YENİ: Oyuncunun bir diyalog seçeneğini temsil eden model
 @freezed
 class DialogueOption with _$DialogueOption {
   const factory DialogueOption({
-    required String text, // Seçeneğin metni
-    String? nextNodeId, // Bu seçeneğin yönlendireceği bir sonraki diyalog ID'si
-    @Default(false) bool isDeepQuestion, // Bu seçenek yapay zeka sorusu mu?
+    required String text,
+    String? nextNodeId,
+    @Default(false) bool isDeepQuestion,
   }) = _DialogueOption;
 
   factory DialogueOption.fromJson(Map<String, dynamic> json) => _$DialogueOptionFromJson(json);
 }
 
-// YENİ: Vakanın çözüm bilgilerini tutan model
 @freezed
 class Solution with _$Solution {
   const factory Solution({
-    required String culpritId, // Gerçek suçlunun ID'si
-    required List<String> criticalEvidenceIds, // Suçu ispatlayan kilit kanıtların ID'leri
-    required String resolutionText, // Vakanın nasıl çözüldüğünü anlatan final metni
+    required String culpritId,
+    required List<String> criticalEvidenceIds,
+    required String resolutionText,
   }) = _Solution;
 
   factory Solution.fromJson(Map<String, dynamic> json) => _$SolutionFromJson(json);

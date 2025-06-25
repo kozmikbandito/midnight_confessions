@@ -550,10 +550,8 @@ mixin _$Character {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   int get age => throw _privateConstructorUsedError;
-  String get occupation =>
-      throw _privateConstructorUsedError; // YENİ: Bu karakterin diyalog başlangıç noktasını belirtir.
-  String? get initialDialogueNode =>
-      throw _privateConstructorUsedError; // YENİ: Bu karakterle ilgili tüm diyalogları içerir.
+  String get occupation => throw _privateConstructorUsedError;
+  String? get initialDialogueNode => throw _privateConstructorUsedError;
   List<DialogueNode> get dialogues => throw _privateConstructorUsedError;
 
   /// Serializes this Character to a JSON map.
@@ -720,12 +718,9 @@ class _$CharacterImpl implements _Character {
   final int age;
   @override
   final String occupation;
-// YENİ: Bu karakterin diyalog başlangıç noktasını belirtir.
   @override
   final String? initialDialogueNode;
-// YENİ: Bu karakterle ilgili tüm diyalogları içerir.
   final List<DialogueNode> _dialogues;
-// YENİ: Bu karakterle ilgili tüm diyalogları içerir.
   @override
   @JsonKey()
   List<DialogueNode> get dialogues {
@@ -795,11 +790,9 @@ abstract class _Character implements Character {
   @override
   int get age;
   @override
-  String
-      get occupation; // YENİ: Bu karakterin diyalog başlangıç noktasını belirtir.
+  String get occupation;
   @override
-  String?
-      get initialDialogueNode; // YENİ: Bu karakterle ilgili tüm diyalogları içerir.
+  String? get initialDialogueNode;
   @override
   List<DialogueNode> get dialogues;
 
@@ -1245,10 +1238,8 @@ DialogueNode _$DialogueNodeFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$DialogueNode {
-  String get id =>
-      throw _privateConstructorUsedError; // Bu diyalog parçasının ID'si
-  String get text =>
-      throw _privateConstructorUsedError; // Karakterin söylediği metin
+  String get id => throw _privateConstructorUsedError;
+  String get text => throw _privateConstructorUsedError;
   List<DialogueOption> get options => throw _privateConstructorUsedError;
 
   /// Serializes this DialogueNode to a JSON map.
@@ -1365,12 +1356,9 @@ class _$DialogueNodeImpl implements _DialogueNode {
 
   @override
   final String id;
-// Bu diyalog parçasının ID'si
   @override
   final String text;
-// Karakterin söylediği metin
   final List<DialogueOption> _options;
-// Karakterin söylediği metin
   @override
   @JsonKey()
   List<DialogueOption> get options {
@@ -1425,9 +1413,9 @@ abstract class _DialogueNode implements DialogueNode {
       _$DialogueNodeImpl.fromJson;
 
   @override
-  String get id; // Bu diyalog parçasının ID'si
+  String get id;
   @override
-  String get text; // Karakterin söylediği metin
+  String get text;
   @override
   List<DialogueOption> get options;
 
@@ -1445,9 +1433,8 @@ DialogueOption _$DialogueOptionFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$DialogueOption {
-  String get text => throw _privateConstructorUsedError; // Seçeneğin metni
-  String? get nextNodeId =>
-      throw _privateConstructorUsedError; // Bu seçeneğin yönlendireceği bir sonraki diyalog ID'si
+  String get text => throw _privateConstructorUsedError;
+  String? get nextNodeId => throw _privateConstructorUsedError;
   bool get isDeepQuestion => throw _privateConstructorUsedError;
 
   /// Serializes this DialogueOption to a JSON map.
@@ -1561,10 +1548,8 @@ class _$DialogueOptionImpl implements _DialogueOption {
 
   @override
   final String text;
-// Seçeneğin metni
   @override
   final String? nextNodeId;
-// Bu seçeneğin yönlendireceği bir sonraki diyalog ID'si
   @override
   @JsonKey()
   final bool isDeepQuestion;
@@ -1618,10 +1603,9 @@ abstract class _DialogueOption implements DialogueOption {
       _$DialogueOptionImpl.fromJson;
 
   @override
-  String get text; // Seçeneğin metni
+  String get text;
   @override
-  String?
-      get nextNodeId; // Bu seçeneğin yönlendireceği bir sonraki diyalog ID'si
+  String? get nextNodeId;
   @override
   bool get isDeepQuestion;
 
@@ -1639,10 +1623,8 @@ Solution _$SolutionFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Solution {
-  String get culpritId =>
-      throw _privateConstructorUsedError; // Gerçek suçlunun ID'si
-  List<String> get criticalEvidenceIds =>
-      throw _privateConstructorUsedError; // Suçu ispatlayan kilit kanıtların ID'leri
+  String get culpritId => throw _privateConstructorUsedError;
+  List<String> get criticalEvidenceIds => throw _privateConstructorUsedError;
   String get resolutionText => throw _privateConstructorUsedError;
 
   /// Serializes this Solution to a JSON map.
@@ -1764,9 +1746,7 @@ class _$SolutionImpl implements _Solution {
 
   @override
   final String culpritId;
-// Gerçek suçlunun ID'si
   final List<String> _criticalEvidenceIds;
-// Gerçek suçlunun ID'si
   @override
   List<String> get criticalEvidenceIds {
     if (_criticalEvidenceIds is EqualUnmodifiableListView)
@@ -1775,7 +1755,6 @@ class _$SolutionImpl implements _Solution {
     return EqualUnmodifiableListView(_criticalEvidenceIds);
   }
 
-// Suçu ispatlayan kilit kanıtların ID'leri
   @override
   final String resolutionText;
 
@@ -1831,10 +1810,9 @@ abstract class _Solution implements Solution {
       _$SolutionImpl.fromJson;
 
   @override
-  String get culpritId; // Gerçek suçlunun ID'si
+  String get culpritId;
   @override
-  List<String>
-      get criticalEvidenceIds; // Suçu ispatlayan kilit kanıtların ID'leri
+  List<String> get criticalEvidenceIds;
   @override
   String get resolutionText;
 

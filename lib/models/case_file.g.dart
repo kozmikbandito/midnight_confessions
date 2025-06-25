@@ -6,18 +6,6 @@ part of 'case_file.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-CaseInfo _$CaseInfoFromJson(Map<String, dynamic> json) => CaseInfo(
-      id: json['id'] as String,
-      title: json['title'] as String,
-      jsonPath: json['json_path'] as String,
-    );
-
-Map<String, dynamic> _$CaseInfoToJson(CaseInfo instance) => <String, dynamic>{
-      'id': instance.id,
-      'title': instance.title,
-      'json_path': instance.jsonPath,
-    };
-
 _$CaseFileImpl _$$CaseFileImplFromJson(Map<String, dynamic> json) =>
     _$CaseFileImpl(
       id: json['id'] as String,
