@@ -49,11 +49,13 @@ class Character with _$Character {
 }
 
 @freezed
+@JsonSerializable(fieldRename: FieldRename.snake)
 class CaseInfo with _$CaseInfo {
   const factory CaseInfo({
     required String id,
     required String title,
-    @JsonKey(name: 'json_path') required String jsonPath, // @JsonKey tam olarak bu satırda olmalı.
+    @JsonKey(name: 'json_path')
+    required String jsonPath,
   }) = _CaseInfo;
 
   factory CaseInfo.fromJson(Map<String, dynamic> json) => _$CaseInfoFromJson(json);
@@ -71,6 +73,7 @@ class Evidence with _$Evidence {
 
   factory Evidence.fromJson(Map<String, dynamic> json) => _$EvidenceFromJson(json);
 }
+
 // YENİ: Bir diyalog anını temsil eden model
 @freezed
 class DialogueNode with _$DialogueNode {
@@ -94,6 +97,7 @@ class DialogueOption with _$DialogueOption {
 
   factory DialogueOption.fromJson(Map<String, dynamic> json) => _$DialogueOptionFromJson(json);
 }
+
 // YENİ: Vakanın çözüm bilgilerini tutan model
 @freezed
 class Solution with _$Solution {
