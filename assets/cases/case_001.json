@@ -1,0 +1,281 @@
+{
+  "case": {
+    "id": "case_001",
+    "title": "Son Nota",
+    "date": "2025-07-12",
+    "location": "Artemis Müzik Akademisi",
+    "time_of_discovery": "22:15",
+    "weather": "Parçalı bulutlu, hafif rüzgar",
+    "description": "Bir konservatuvarda sahne provasından sonra, baş eğitmen gece ölü bulunur.",
+    "victim": {
+      "id": "leonard_voss",
+      "name": "Leonard Voss",
+      "age": 61,
+      "occupation": "Baş piyano eğitmeni",
+      "cause_of_death": "Kafatası travması - sahne arkasında düşme/itilme şüphesi",
+      "death_time": "21:40",
+      "found_location": "Sahne arkası depo odası"
+    },
+    "characters": [
+      {
+        "id": "amelia_kerr",
+        "name": "Amelia Kerr",
+        "age": 27,
+        "occupation": "Piyano öğrencisi",
+        "role_in_case": "suspect",
+        "traits": ["hırslı", "sessiz"],
+        "motive": "Final resitali solisti seçilmediği için Voss ile tartışmıştı.",
+        "alibi": { "description": "Çalışma odasında tek başıma egzersiz yapıyordum.", "location": "Piyano Odası 2", "is_verified": false },
+        "inventory": ["performans notları"],
+        "initialDialogueNode": "amelia_start",
+        "dialogues": [
+          {
+            "id": "amelia_start",
+            "text": "Yine ne var? Bay Voss hakkında mı? O korkunç olaydan sonra hala kendime gelemedim.",
+            "options": [
+              { "text": "Olay anında neredeydiniz?", "nextNodeId": "amelia_alibi" },
+              { "text": "Bay Voss ile aranız nasıldı?", "nextNodeId": "amelia_relationship" },
+              { "text": "[Derin Soru] O gece gerçekten ne hissettin?", "isDeepQuestion": true }
+            ]
+          },
+          {
+            "id": "amelia_alibi",
+            "text": "Söyledim ya, 2. piyano odasında tek başıma çalışıyordum. Kimseyi görmedim.",
+            "options": [
+              { "text": "Anladım. Bay Voss ile ilişkinize dönelim.", "nextNodeId": "amelia_relationship" },
+              { "text": "Peki, şimdilik bu kadar.", "nextNodeId": null }
+            ]
+          },
+          {
+            "id": "amelia_relationship",
+            "text": "Bay Voss... zor bir adamdı. Çok talepkardı. Ama en iyisi olmamı isterdi. Resital seçmeleri yüzünden tartıştığımız doğru ama... bu kadarını hak etmedi.",
+            "options": [
+              { "text": "Nerede olduğunu tekrar sorabilir miyim?", "nextNodeId": "amelia_alibi" },
+              { "text": "Teşekkürler Amelia.", "nextNodeId": null }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "harold_fenn",
+        "name": "Harold Fenn",
+        "age": 45,
+        "occupation": "Teknik sorumlu",
+        "role_in_case": "witness",
+        "traits": ["dikkatli", "çekingen"],
+        "motive": null,
+        "alibi": {
+          "description": "Sahne ışıklarını tamir ediyordum.",
+          "location": "Ana Salon",
+          "is_verified": true
+        },
+        "inventory": ["el feneri", "alet çantası"]
+      },
+      {
+        "id": "ivy_ross",
+        "name": "Ivy Ross",
+        "age": 39,
+        "occupation": "Yardımcı eğitmen",
+        "role_in_case": "suspect",
+        "traits": ["duygusal", "ketum"],
+        "motive": "Voss’un onu akademi dışına itmek istediği iddia ediliyor.",
+        "alibi": {
+          "description": "Mutfakta çay demliyordum.",
+          "location": "Öğretmenler Mutfağı",
+          "is_verified": false
+        },
+        "inventory": ["çay fincanı", "anahtarlık"]
+      },
+      {
+        "id": "bruno_king",
+        "name": "Bruno King",
+        "age": 32,
+        "occupation": "Eski öğrenci",
+        "role_in_case": "visitor",
+        "traits": ["öfke kontrolü zayıf", "dalgın"],
+        "motive": "Akademiden kovulmasının sorumlusu olarak Voss’u görüyordu.",
+        "alibi": {
+          "description": "Salon dışında sigara içiyordum.",
+          "location": "Arka kapı girişi",
+          "is_verified": null
+        },
+        "inventory": ["çakmak", "sigara paketi"]
+      }
+    ],
+    "relationships": [
+      {
+        "source": "amelia_kerr",
+        "target": "leonard_voss",
+        "type": "öğrenci-eğitmen",
+        "intensity": "yüksek",
+        "notes": "Gerilimli son dönem, finalde seçilmedi"
+      },
+      {
+        "source": "ivy_ross",
+        "target": "leonard_voss",
+        "type": "iş arkadaşı",
+        "intensity": "orta",
+        "notes": "Akademik iç çatışma"
+      },
+      {
+        "source": "harold_fenn",
+        "target": "ivy_ross",
+        "type": "dostluk",
+        "intensity": "zayıf",
+        "notes": "Zaman zaman kahve molalarında sohbet ederler"
+      },
+      {
+        "source": "bruno_king",
+        "target": "leonard_voss",
+        "type": "eski öğrenci-eğitmen",
+        "intensity": "düşmanlık",
+        "notes": "Atılma sebebi olarak Voss’u suçluyor"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "storage_room",
+        "name": "Sahne Arkası Depo",
+        "locked": true,
+        "items_found": ["devrilmiş raf", "kan izleri", "not defteri"]
+      },
+      {
+        "id": "piano_room_2",
+        "name": "Piyano Odası 2",
+        "locked": false,
+        "items_found": []
+      },
+      {
+        "id": "kitchen",
+        "name": "Öğretmenler Mutfağı",
+        "locked": false,
+        "items_found": ["kırık fincan", "çay lekesi"]
+      }
+    ],
+    "evidence": [
+      {
+        "id": "e001",
+        "name": "kan izleri",
+        "location": "storage_room",
+        "description": "Sahne arkası depo odasında bulunan kırmızı renkli kan lekeleri.",
+        "type": "fiziksel",
+        "is_hidden": false,
+        "validity": "valid",
+        "reveal_stage": 0,
+        "twist_explanation": "",
+        "related_to": [
+          {
+            "character_id": "leonard_voss",
+            "relation_type": "kurban",
+            "relevance": "yüksek",
+            "notes": "Kurbanın kanı olduğu kesin."
+          }
+        ]
+      },
+      {
+        "id": "e002",
+        "name": "not defteri",
+        "location": "storage_room",
+        "description": "Kurbanın özel notlarını içeren defter. Bazı sayfalar yıpranmış.",
+        "type": "belge",
+        "is_hidden": false,
+        "validity": "valid",
+        "reveal_stage": 1,
+        "twist_explanation": "",
+        "related_to": [
+          {
+            "character_id": "amelia_kerr",
+            "relation_type": "şüpheli mülkiyeti",
+            "relevance": "orta",
+            "notes": "Amelia’nın not defterini sakladığı şüphesi."
+          }
+        ]
+      },
+      {
+        "id": "e003",
+        "name": "kırık fincan",
+        "location": "kitchen",
+        "description": "Öğretmenler mutfağında bulunan, sapı kırık porselen fincan. İçinde taze çay kalıntısı var.",
+        "type": "fiziksel",
+        "is_hidden": true,
+        "validity": "misleading",
+        "reveal_stage": 2,
+        "twist_explanation": "Fincan Ivy Ross’un parmak izleriyle ilişkilendirildi ancak sonradan mutfakta çay dökme sonucu kırıldığı anlaşıldı.",
+        "related_to": [
+          {
+            "character_id": "ivy_ross",
+            "relation_type": "mülkiyet",
+            "relevance": "yüksek",
+            "notes": "Fincanın üzerindeki parmak izleri Ivy Ross’a ait."
+          }
+        ]
+      },
+      {
+        "id": "e004",
+        "name": "el feneri",
+        "location": "harold_fenn",
+        "description": "Harold’un kullandığı el feneri, sahnede çalışma sırasında bulundu.",
+        "type": "eşya",
+        "is_hidden": false,
+        "validity": "valid",
+        "reveal_stage": 0,
+        "twist_explanation": "",
+        "related_to": [
+          {
+            "character_id": "harold_fenn",
+            "relation_type": "eşya sahibi",
+            "relevance": "orta",
+            "notes": "Harold’un çalışma aracı."
+          }
+        ]
+      },
+      {
+        "id": "e010",
+        "name": "tehdit notu",
+        "location": "victim_room",
+        "description": "Kurbanın masasındaki elle yazılmış, 'Herkes bedelini öder.' notu.",
+        "type": "belge",
+        "is_hidden": false,
+        "validity": "misleading",
+        "reveal_stage": 1,
+        "twist_explanation": "Bu not, öğrencilerin tiyatro şakası için yazdığı bir metinden alınmıştır. Kurban bunu ciddiye almamıştır.",
+        "related_to": [
+          {
+            "character_id": "amelia_kerr",
+            "relation_type": "yazı tarzı benzerliği",
+            "relevance": "yüksek",
+            "notes": "El yazısı Amelia’nın eski defterleriyle benzerlik gösteriyor."
+          }
+        ]
+      }
+    ],
+    "rumors": [
+      {
+        "id": "r001",
+        "who_said_it": "öğrenci_sophie",
+        "about": "amelia_kerr",
+        "content": "Final seçiminden sonra bağırarak odayı terk ettiğini duydum.",
+        "trustworthiness": "yüksek"
+      },
+      {
+        "id": "r002",
+        "who_said_it": "görevli_tamirci",
+        "about": "bruno_king",
+        "content": "Haftalardır dışarıdan binaya gizlice giriyor.",
+        "trustworthiness": "orta"
+      },
+      {
+        "id": "r003",
+        "who_said_it": "ivy_ross",
+        "about": "leonard_voss",
+        "content": "Yönetimi tamamen kendi çıkarı için kullanıyor.",
+        "trustworthiness": "subjektif"
+      }
+    ],
+    "solution": {
+      "culpritId": "amelia_kerr",
+      "criticalEvidenceIds": ["e002", "e010"],
+      "resolutionText": "Amelia Kerr, resital seçmelerindeki haksızlığa dayanamayarak bir anlık öfke ile Bay Voss'u itti. Olayın kaza gibi görünmesini ummuştu ancak arkasında bıraktığı not defteri ve tehdit notu onu ele verdi. Diğer kanıtlar ise dikkat dağıtmak için olay yerine bırakılmıştı."
+    }
+  }
+}

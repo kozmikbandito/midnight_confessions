@@ -1,0 +1,49 @@
+{
+  "case": {
+    "id": "case_002",
+    "title": "Fırça Darbesi Vurgunu",
+    "date": "2025-08-05",
+    "location": "Modern Sanat Galerisi",
+    "time_of_discovery": "09:00",
+    "weather": "Güneşli, açık",
+    "description": "Şehrin en prestijli sanat galerisinden paha biçilmez bir tablo, açılıştan hemen önce çalınır.",
+    "victim": {
+      "id": "gallery_owner",
+      "name": "Helena Vega",
+      "age": 52,
+      "occupation": "Galeri Sahibi",
+      "cause_of_death": null,
+      "death_time": null,
+      "found_location": null
+    },
+    "characters": [
+      {
+        "id": "julian_vance",
+        "name": "Julian Vance",
+        "age": 45,
+        "occupation": "Restoratör Sanatçı",
+        "role_in_case": "suspect",
+        "initialDialogueNode": "julian_start",
+        "dialogues": [{
+          "id": "julian_start",
+          "text": "O tablo... benim hayatımın eseriydi. Onu restore etmek için aylarca uğraştım. Kaybolduğuna inanamıyorum.",
+          "options": [{"text": "O gece neredeydiniz?", "nextNodeId": null}]
+        }]
+      }
+    ],
+    "evidence": [
+      {
+        "id": "e201",
+        "name": "Çamurlu Ayak İzleri",
+        "location": "gallery_main_hall",
+        "description": "Galerinin cilalı zemininde, arka kapıya doğru giden çamurlu bot izleri.",
+        "type": "fiziksel"
+      }
+    ],
+    "solution": {
+      "culpritId": "julian_vance",
+      "criticalEvidenceIds": ["e201"],
+      "resolutionText": "Restoratör Julian Vance, tablonun sigorta parasını alabilmek için sahtesini yapıp gerçeğini çaldı. Ancak arkasında bıraktığı çamurlu ayak izleri, onu ele verdi."
+    }
+  }
+}

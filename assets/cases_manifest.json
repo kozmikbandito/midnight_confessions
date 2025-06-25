@@ -1,0 +1,14 @@
+{
+  "cases": [
+    {
+      "id": "case_001",
+      "title": "Son Nota",
+      "json_path": "assets/cases/case_001.json"
+    },
+    {
+      "id": "case_002",
+      "title": "Fırça Darbesi Vurgunu",
+      "json_path": "assets/cases/case_002.json"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "810194845693",
+    "project_id": "midnight-confessions-e68ae",
+    "storage_bucket": "midnight-confessions-e68ae.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:810194845693:android:4e4947aa499b7538742394",
+        "android_client_info": {
+          "package_name": "com.example.midnight_confessions"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQdJpqP5toEkpyyoxC1uMtYjhp-rkQtPg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
