@@ -1,40 +1,85 @@
-// lib/services/ai_service.dart
+// lib/services/ai_service.dart (YENİ HALİ - GEMINI)
 import 'dart:convert';
-import 'package:http/http.dart' as http;
+import 'package:google_generative_ai/google_generative_ai.dart';
 
 class AIService {
-  // DİKKAT: Normal bir uygulamada bu anahtar ASLA doğrudan koda yazılmaz.
-  // Bu, sadece eğitim amaçlı bir basitleştirmedir.
-  final String _apiKey = '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';
-  final String _apiUrl = 'https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.2';
+  // DİKKAT: Kendi Gemini API Anahtarınızı buraya yapıştırın.
+  static const String _apiKey = 'AIzaSyBuNF3VdjwzZekmzWirvjPr4-V0Omdsadg';
 
-  Future<String> getDynamicResponse(String characterName, String prompt) async {
+  Future<String> getCharacterResponse({
+    required String characterName,
+    required String caseInfo,
+    required List<String> collectedEvidence,
+    required String conversationHistory,
+    required String playerQuestion,
+  }) async {
+    final prompt = """
+    Sen bir dedektiflik oyunundaki $characterName adlı karaktersin. Oyuncunun (dedektifin) sana sorduğu soruya, karakterin ağzından, kısa, gizemli ve hikayeye uygun bir cevap ver. Konuşma geçmişini ve bilinen kanıtları dikkate al.
+
+    VAKA BİLGİSİ: $caseInfo
+    BİLİNEN KANITLAR:
+    - ${collectedEvidence.join('\n- ')}
+    
+    KONUŞMA GEÇMİŞİ:
+    $conversationHistory
+
+    Dedektifin son sorusu: "$playerQuestion"
+    
+    Cevabında kendi ismini kullanma. Sadece konuşma metnini yaz.
+    """;
+    return _generateContent(prompt);
+  }
+
+  Future<List<String>> getDialogueSuggestions({
+    required String characterName,
+    required String caseInfo,
+    required List<String> collectedEvidence,
+    required String conversationHistory,
+  }) async {
+    final prompt = """
+    Sen bir dedektiflik oyununda oyuncuya yardımcı olan bir asistansın. Aşağıdaki bilgilere dayanarak, dedektifin $characterName adlı karaktere şimdi sorması için en mantıklı, kısa ve birbirinden farklı 3 soru önerisi üret. Cevabı sadece ve sadece bir JSON listesi formatında ver. Örnek: ["Soru 1?", "Soru 2?", "Bunu neden yaptın?"]
+
+    VAKA BİLGİSİ: $caseInfo
+    BİLİNEN KANITLAR:
+    - ${collectedEvidence.join('\n- ')}
+    
+    KONUŞMA GEÇMİŞİ ($characterName ile):
+    $conversationHistory
+    """;
+
     try {
-      final response = await http.post(
-        Uri.parse(_apiUrl),
-        headers: {
-          'Authorization': 'Bearer $_apiKey',
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode({
-          'inputs': "Bir dedektiflik oyununda, $characterName adlı karakter sensin. Dedektifin sana sorduğu şu soruya karakterin ağzından, kısa ve gizemli bir cevap ver: '$prompt'",
-        }),
-      );
+      final responseText = await _generateContent(prompt);
+      final jsonListRegex = RegExp(r'\[\s*".*?"\s*(,\s*".*?"\s*)*\]');
+      final match = jsonListRegex.firstMatch(responseText);
 
-      if (response.statusCode == 200) {
-        final List<dynamic> jsonResponse = jsonDecode(response.body);
-        if (jsonResponse.isNotEmpty && jsonResponse[0].containsKey('generated_text')) {
-          // Cevabın içinden sadece karakterin konuşmasını alalım.
-          String fullText = jsonResponse[0]['generated_text'];
-          // Soru cümlesini yanıttan temizleyelim
-          String characterResponse = fullText.split("'$prompt'").last.trim();
-          return characterResponse.replaceAll('"', ''); // Tırnak işaretlerini temizle
-        }
-        return "Cevap formatı beklenmedik.";
-      } else {
-        return "(Karakter şu an düşüncelere dalmış durumda... Hata: ${response.statusCode})";
+      if (match != null) {
+        final jsonString = match.group(0)!;
+        final List<dynamic> parsedList = jsonDecode(jsonString);
+        return parsedList.cast<String>();
       }
+      return [];
     } catch (e) {
+      print("Suggestion generation error: $e");
+      return [];
+    }
+  }
+
+  Future<String> _generateContent(String prompt) async {
+    try {
+      final model = GenerativeModel(model: 'gemini-2.5-flash', apiKey: _apiKey);
+      final content = [Content.text(prompt)];
+      final response = await model.generateContent(content);
+
+      if (response.text != null) {
+        return response.text!;
+      }
+      return "(Karakterin zihni anlaşılamıyor... Cevap boş geldi.)";
+    } catch (e) {
+      print("Gemini API Error: $e");
+      // Gemini'ın spesifik hata mesajlarını yakalayıp daha anlamlı hale getirebiliriz.
+      if (e is GenerativeAIException) {
+        return "(Karakterin zihni bulanık... API Hatası: ${e.message})";
+      }
       return "(Karakterin zihni şu an çok karışık... Bağlantı hatası.)";
     }
   }

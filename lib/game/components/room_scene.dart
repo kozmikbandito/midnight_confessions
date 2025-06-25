@@ -1,12 +1,10 @@
-// lib/game/components/room_scene.dart (FLAME 1.17.0 UYUMLU)
-
+// lib/game/components/room_scene.dart (const uyarısı düzeltildi)
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/parallax.dart';
 import 'package:midnight_confessions/game/game.dart';
 import 'package:midnight_confessions/game_logic/game_bloc.dart';
 
-// DÜZELTME: Tappable yerine TapCallbacks kullanıldı
 class Hotspot extends SpriteComponent with TapCallbacks, HasGameReference<MidnightConfessionsGame> {
   final String message;
   final String evidenceId;
@@ -31,12 +29,16 @@ class Hotspot extends SpriteComponent with TapCallbacks, HasGameReference<Midnig
 class RoomScene extends ParallaxComponent<MidnightConfessionsGame> {
   @override
   Future<void> onLoad() async {
+    final imagePath = 'case_${game.caseFile.id.split('_').last}/rooms/storage_room_bg.png';
+
     parallax = await game.loadParallax(
       [
-        ParallaxImageData('rooms/storage_room_bg.png'),
+        // const uyarısı için DÜZELTME
+        ParallaxImageData(imagePath),
       ],
+      // const uyarısı için DÜZELTME
       baseVelocity: Vector2(10, 0),
-      velocityMultiplierDelta: Vector2(1.8, 0),
+      velocityMultiplierDelta: const Vector2(1.8, 0),
     );
 
     add(Hotspot(
